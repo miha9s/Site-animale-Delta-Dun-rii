@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumea Apelor Deltei Dunării</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep: #0D3B4E;
+    --teal: #157A73;
+    --reed: #6FA342;
+    --sun: #F5B942;
+    --lily: #E8607A;
+    --sand: #FBF1DA;
+    --ink: #12303A;
+    --white: #FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    background:var(--sand);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Baloo 2', sans-serif; margin:0;}
+  p{line-height:1.55;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg, var(--deep) 0%, var(--teal) 65%, #1E9A86 100%);
+    color:var(--white);
+    padding:64px 24px 120px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero .bubble{
+    position:absolute; border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    animation:float 8s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-22px);}
+  }
+  .hero h1{
+    font-size:clamp(2rem, 5vw, 3.4rem);
+    font-weight:800;
+    text-shadow:0 4px 18px rgba(0,0,0,0.25);
+  }
+  .hero .eyebrow{
+    display:inline-block;
+    font-family:'Baloo 2', sans-serif;
+    background:var(--sun);
+    color:var(--deep);
+    padding:6px 18px;
+    border-radius:999px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    margin-bottom:18px;
+    font-size:0.95rem;
+  }
+  .hero p.lead{
+    max-width:620px; margin:18px auto 30px;
+    font-size:1.15rem; opacity:0.95;
+  }
+  .hero-btn{
+    display:inline-block;
+    background:var(--sun);
+    color:var(--deep);
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:1.1rem;
+    padding:14px 32px;
+    border-radius:999px;
+    text-decoration:none;
+    box-shadow:0 8px 0 #C98F1E;
+    transition:transform 0.15s;
+  }
+  .hero-btn:active{transform:translateY(6px); box-shadow:0 2px 0 #C98F1E;}
+  .wave{
+    position:absolute; bottom:-2px; left:0; width:100%; line-height:0;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--white);
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+    overflow-x:auto;
+    white-space:nowrap;
+    padding:10px 16px;
+  }
+  .nav::-webkit-scrollbar{height:6px;}
+  .nav a{
+    display:inline-block;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    padding:8px 16px;
+    margin:0 4px;
+    border-radius:999px;
+    text-decoration:none;
+    color:var(--deep);
+    background:var(--sand);
+  }
+  .nav a:hover{background:var(--sun);}
+
+  /* ---------- RIVER PROGRESS (signature element) ---------- */
+  .river-rail{
+    position:fixed; left:14px; top:50%; transform:translateY(-50%);
+    width:6px; height:46vh; max-height:420px;
+    background:linear-gradient(var(--teal), var(--deep));
+    border-radius:6px; z-index:40; opacity:0.35;
+  }
+  .river-boat{
+    position:fixed; left:2px; top:calc(50% - 23vh);
+    font-size:1.6rem; z-index:41;
+    transition:top 0.1s linear;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,0.3));
+  }
+  @media (max-width:800px){
+    .river-rail, .river-boat{display:none;}
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section{padding:64px 0 40px;}
+  .section-head{
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:8px;
+  }
+  .section-icon{
+    font-size:2.4rem;
+    width:64px; height:64px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:20px;
+    flex-shrink:0;
+  }
+  .section-head h2{font-size:clamp(1.5rem,3vw,2.1rem);}
+  .section-intro{max-width:720px; margin:14px 0 30px; font-size:1.05rem;}
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:20px;
+    margin-bottom:28px;
+  }
+  .card{
+    background:var(--white);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 6px 20px rgba(13,59,78,0.08);
+    border-top:6px solid var(--teal);
+    position:relative;
+  }
+  .card .emoji{font-size:2.6rem; display:block; margin-bottom:6px;}
+  .card h3{font-size:1.2rem; margin-bottom:8px;}
+  .card .row{margin:8px 0; font-size:0.95rem;}
+  .card .row b{display:block; font-family:'Baloo 2',sans-serif; font-size:0.85rem; color:var(--teal); margin-bottom:2px;}
+  .badge-protected{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--lily); color:var(--white);
+    font-family:'Baloo 2', sans-serif; font-weight:700;
+    font-size:0.75rem; padding:6px 12px; border-radius:999px;
+    margin-top:10px;
+  }
+
+  .fact-box{
+    background:#FFF6DF;
+    border:2px dashed var(--sun);
+    border-radius:16px;
+    padding:18px 22px;
+    margin-bottom:28px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .fact-box .bulb{font-size:1.8rem;}
+  .fact-box h4{font-family:'Baloo 2',sans-serif; color:#A9720E; margin-bottom:4px;}
+
+  /* ---------- QUIZ ---------- */
+  .quiz{
+    background:var(--deep);
+    color:var(--white);
+    border-radius:20px;
+    padding:26px 26px 30px;
+  }
+  .quiz h4{font-family:'Baloo 2',sans-serif; font-size:1.3rem; margin-bottom:4px;}
+  .quiz .sub{opacity:0.8; font-size:0.9rem; margin-bottom:18px;}
+  .q-block{margin-bottom:20px;}
+  .q-block p.question{font-weight:700; margin-bottom:10px;}
+  .opts{display:flex; flex-wrap:wrap; gap:10px;}
+  .opt-btn{
+    background:rgba(255,255,255,0.1);
+    border:2px solid rgba(255,255,255,0.3);
+    color:var(--white);
+    padding:9px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    font-family:'Nunito',sans-serif;
+    font-size:0.92rem;
+    transition:all 0.15s;
+  }
+  .opt-btn:hover{background:rgba(255,255,255,0.2);}
+  .opt-btn.selected{background:var(--sun); color:var(--deep); border-color:var(--sun); font-weight:700;}
+  .opt-btn.correct{background:#5FCB6C; color:var(--deep); border-color:#5FCB6C; font-weight:700;}
+  .opt-btn.wrong{background:var(--lily); color:var(--white); border-color:var(--lily);}
+  .submit-btn{
+    margin-top:6px;
+    background:var(--sun); color:var(--deep);
+    font-family:'Baloo 2',sans-serif; font-weight:700;
+    border:none; padding:12px 26px; border-radius:999px;
+    cursor:pointer; font-size:1rem;
+    box-shadow:0 6px 0 #C98F1E;
+  }
+  .submit-btn:active{transform:translateY(4px); box-shadow:0 2px 0 #C98F1E;}
+  .result{
+    display:none;
+    margin-top:18px;
+    background:rgba(255,255,255,0.1);
+    border-radius:14px;
+    padding:16px 20px;
+  }
+  .result.show{display:block; animation:pop 0.4s ease;}
+  @keyframes pop{from{transform:scale(0.9); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .result .score{font-family:'Baloo 2',sans-serif; font-size:1.15rem; margin-bottom:8px;}
+  .joke{
+    background:var(--sun); color:var(--deep);
+    border-radius:12px; padding:14px 16px;
+    font-weight:700; display:flex; gap:10px; align-items:center;
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing{
+    background:linear-gradient(160deg, var(--reed), #4C7E2A);
+    color:var(--white);
+    text-align:center;
+    padding:70px 24px;
+  }
+  .closing h2{font-size:clamp(1.6rem,4vw,2.3rem); margin-bottom:14px;}
+  .rules{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px; max-width:900px; margin:30px auto 0; text-align:left;
+  }
+  .rules .rule{
+    background:rgba(255,255,255,0.13);
+    border-radius:14px; padding:16px 18px; font-size:0.95rem;
+  }
+  footer{
+    text-align:center; padding:22px; background:var(--deep); color:rgba(255,255,255,0.6);
+    font-size:0.85rem;
+  }
+
+  /* section color themes */
+  #pesti .section-icon{background:#DCEEF5;}
+  #pesti .card{border-top-color:#2B87A8;}
+  #pasari .section-icon{background:#E4F0DC;}
+  #pasari .card{border-top-color:var(--reed);}
+  #mamifere .section-icon{background:#FBE3E8;}
+  #mamifere .card{border-top-color:var(--lily);}
+  #reptile .section-icon{background:#FDEFD9;}
+  #reptile .card{border-top-color:var(--sun);}
+  #nevertebrate .section-icon{background:#E6E1F2;}
+  #nevertebrate .card{border-top-color:#7A5FC1;}
+</style>
+</head>
+<body>
+
+<div class="river-rail"></div>
+<div class="river-boat" id="boat">🚤</div>
+
+<header class="hero">
+  <div class="bubble" style="width:60px;height:60px; top:20px; left:10%;"></div>
+  <div class="bubble" style="width:30px;height:30px; top:80px; left:80%; animation-delay:2s;"></div>
+  <div class="bubble" style="width:90px;height:90px; top:160px; left:60%; animation-delay:1s;"></div>
+  <span class="eyebrow">🌾 Clasa a IV-a • Explorăm natura</span>
+  <h1>Lumea Apelor<br>Deltei Dunării</h1>
+  <p class="lead">Hai să pornim într-o călătorie cu barca printre stuf, lacuri și canale, ca să descoperim ce animale trăiesc în cea mai mare deltă din Europa, ce mănâncă, cum au pui și cine le amenință viața!</p>
+  <a href="#pesti" class="hero-btn">Pornim călătoria 🚣</a>
+  <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none"><path fill="#FBF1DA" d="M0,60 C240,110 480,10 720,40 C960,70 1200,100 1440,50 L1440,100 L0,100 Z"></path></svg>
+</header>
+
+<nav class="nav">
+  <a href="#pesti">🐟 Pești</a>
+  <a href="#pasari">🦢 Păsări</a>
+  <a href="#mamifere">🦦 Mamifere</a>
+  <a href="#reptile">🐢 Reptile & Amfibieni</a>
+  <a href="#nevertebrate">🦀 Nevertebrate</a>
+  <a href="#ocrotim">🛡️ Ocrotim Delta</a>
+</nav>
+
+<!-- ================= PEȘTI ================= -->
+<section class="section" id="pesti">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-icon">🐟</div>
+      <h2>Peștii Deltei</h2>
+    </div>
+    <p class="section-intro">Apele Deltei sunt pline de pești! Unii trăiesc aproape de suprafață, alții stau ascunși pe fundul apei, printre plante și nămol.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🐋</span>
+        <h3>Nisetrul</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Caută pe fundul apei viermi, scoici și rme mici, folosindu-şi botul lung ca pe un aspirator.</div>
+        <div class="row"><b>👶 Reproducere</b>Înoată din mare spre izvoarele Dunării ca să depună icre pe pietriș, o călătorie de sute de kilometri.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Este vânat ilegal pentru icrele lui (caviar) și nu mai poate ajunge la locurile de reproducere din cauza barajelor.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ</span>
+      </div>
+      <div class="card">
+        <span class="emoji">🐟</span>
+        <h3>Șalăul</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Este un vânător: mănâncă pești mai mici pe care îi prinde cu dinții ascuțiți.</div>
+        <div class="row"><b>👶 Reproducere</b>Depune icre primăvara, printre rădăcinile plantelor de apă, unde sunt mai ferite.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Poluarea apei și pescuitul excesiv îi reduc numărul.</div>
+      </div>
+      <div class="card">
+        <span class="emoji">🐠</span>
+        <h3>Crapul</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Mănâncă de toate: plante, insecte și mici viețuitoare de pe fundul apei.</div>
+        <div class="row"><b>👶 Reproducere</b>Depune mii de icre pe plantele din apele line, la marginea bălților.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Păsările pescărese și peștii răpitori mănâncă icrele și puii mici.</div>
+      </div>
+      <div class="card">
+        <span class="emoji">🐡</span>
+        <h3>Somnul</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Este cel mai mare pește din Deltă și vânează noaptea broaște, pești și raci.</div>
+        <div class="row"><b>👶 Reproducere</b>Masculul păzește icrele depuse de femelă într-un cuib făcut din plante.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Puii sunt vulnerabili în fața păsărilor și a peștilor mai mari.</div>
+      </div>
+    </div>
+
+    <div class="fact-box">
+      <span class="bulb">💡</span>
+      <div><h4>Știați că...?</h4><p>Nisetrii trăiesc de foarte mult timp pe Pământ — dinozaurii apucaseră să-i vadă! De aceea sunt numiți uneori „fosile vii”.</p></div>
+    </div>
+
+    <div class="quiz" data-quiz="pesti">
+      <h4>🎯 Chestionar: Peștii Deltei</h4>
+      <p class="sub">Alege răspunsul corect la fiecare întrebare, apoi apasă pe „Verifică”.</p>
+
+      <div class="q-block">
+        <p class="question">1. Cu ce își caută hrana nisetrul pe fundul apei?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Cu ochii, de la suprafață</button>
+          <button class="opt-btn" data-correct="true">Cu botul lung, ca un aspirator</button>
+          <button class="opt-btn" data-correct="false">Cu aripioarele</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">2. Cum se reproduc majoritatea peștilor din Deltă?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Depun icre în apă</button>
+          <button class="opt-btn" data-correct="false">Nasc pui vii, ca mamiferele</button>
+          <button class="opt-btn" data-correct="false">Din semințe purtate de vânt</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">3. De ce este nisetrul o specie protejată?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Pentru că este prea mic</button>
+          <button class="opt-btn" data-correct="true">Este vânat ilegal pentru icre și greu ajunge la locul de reproducere</button>
+          <button class="opt-btn" data-correct="false">Nu este de fapt protejat</button>
+        </div>
+      </div>
+
+      <button class="submit-btn">Verifică răspunsurile ✅</button>
+      <div class="result">
+        <p class="score"></p>
+        <div class="joke">😄 <span>De ce nu învață peștii la școală? Pentru că sunt deja „în bancuri”!</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PĂSĂRI ================= -->
+<section class="section" id="pasari">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-icon">🦢</div>
+      <h2>Păsările acvatice</h2>
+    </div>
+    <p class="section-intro">Delta Dunării este casa a sute de specii de păsări. Multe dintre ele vin de departe, din Africa, doar ca să-și crească puii aici, printre stufărișuri.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🦩</span>
+        <h3>Pelicanul comun</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Prinde pești cu ciocul lui mare, care are un sac special ca o plasă de pescuit.</div>
+        <div class="row"><b>👶 Reproducere</b>Cuibărește în colonii, pe insule de stuf, iar ambii părinți hrănesc puii.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Tăierea stufului și deranjarea coloniilor de către oameni le pun în pericol cuiburile.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ</span>
+      </div>
+      <div class="card">
+        <span class="emoji">🐦‍⬛</span>
+        <h3>Cormoranul mic</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Se scufundă după pești și îi prinde înotând sub apă.</div>
+        <div class="row"><b>👶 Reproducere</b>Își face cuib din crenguțe în copaci sau tufe de lângă apă, în colonii mari.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Poluarea apei reduce numărul de pești pe care se hrănește.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ</span>
+      </div>
+      <div class="card">
+        <span class="emoji">🕊️</span>
+        <h3>Egreta albă</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Stă nemișcată în apă mică și așteaptă pești sau broaște, pe care le prinde rapid.</div>
+        <div class="row"><b>👶 Reproducere</b>Cuibărește în copaci de lângă baltă, alături de alte păsări.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Vulpile și șobolanii pot fura ouăle din cuiburile joase.</div>
+      </div>
+      <div class="card">
+        <span class="emoji">🦆</span>
+        <h3>Lebăda de vară</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Mănâncă plante acvatice, pe care le culege de pe fundul apelor line.</div>
+        <div class="row"><b>👶 Reproducere</b>Face un cuib mare din stuf, chiar pe malul apei, și depune câteva ouă.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Câinii și animalele care umblă libere lângă cuiburi pot speria adulții sau ataca ouăle.</div>
+      </div>
+    </div>
+
+    <div class="fact-box">
+      <span class="bulb">💡</span>
+      <div><h4>Știați că...?</h4><p>Pelicanii zboară în stoluri formate ca litera V, ca să se ajute unii pe alții cu aerul deplasat de aripi și să obosească mai puțin!</p></div>
+    </div>
+
+    <div class="quiz" data-quiz="pasari">
+      <h4>🎯 Chestionar: Păsările acvatice</h4>
+      <p class="sub">Alege răspunsul corect, apoi apasă pe „Verifică”.</p>
+
+      <div class="q-block">
+        <p class="question">1. Cum prinde pelicanul peștii?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Cu gheare ascuțite</button>
+          <button class="opt-btn" data-correct="true">Cu sacul special din cioc</button>
+          <button class="opt-btn" data-correct="false">Nu mănâncă pești</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">2. Unde își fac cuib multe păsări acvatice din Deltă?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">În colonii, pe stuf sau în copaci de lângă apă</button>
+          <button class="opt-btn" data-correct="false">În scorburi din munți</button>
+          <button class="opt-btn" data-correct="false">Sub pământ</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">3. Ce le poate amenința cuiburile?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Tăierea stufului și deranjarea de către oameni</button>
+          <button class="opt-btn" data-correct="false">Prea multă apă curată</button>
+          <button class="opt-btn" data-correct="false">Nimic, sunt mereu în siguranță</button>
+        </div>
+      </div>
+
+      <button class="submit-btn">Verifică răspunsurile ✅</button>
+      <div class="result">
+        <p class="score"></p>
+        <div class="joke">😄 <span>Ce spune un pelican când greșește? „Am dat-o iar în bară... de pescuit!”</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MAMIFERE ================= -->
+<section class="section" id="mamifere">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-icon">🦦</div>
+      <h2>Mamiferele acvatice</h2>
+    </div>
+    <p class="section-intro">Nu doar peștii și păsările trăiesc în apă — și câteva mamifere s-au adaptat perfect la viața printre canale și lacuri.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🦦</span>
+        <h3>Vidra</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Este o înotătoare excelentă și prinde pești, raci și broaște cu labele și dinții ei ageri.</div>
+        <div class="row"><b>👶 Reproducere</b>Naște 1-4 pui vii, într-un adăpost săpat în mal, numit „holt”, unde îi crește câteva luni.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Poluarea apei și distrugerea malurilor naturale îi reduc locurile de trai.</div>
+      </div>
+      <div class="card">
+        <span class="emoji">🐾</span>
+        <h3>Nurca europeană</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Vânează pești mici, broaște și insecte de apă, mai ales noaptea.</div>
+        <div class="row"><b>👶 Reproducere</b>Naște pui vii primăvara, într-o vizuină ascunsă printre rădăcini, aproape de apă.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Nurca americană, o specie adusă din altă parte a lumii, îi ocupă locul și hrana.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ</span>
+      </div>
+    </div>
+
+    <div class="fact-box">
+      <span class="bulb">💡</span>
+      <div><h4>Știați că...?</h4><p>Vidra își poate ține respirația sub apă câteva minute și are blana atât de deasă, încât apa nu ajunge deloc la piele!</p></div>
+    </div>
+
+    <div class="quiz" data-quiz="mamifere">
+      <h4>🎯 Chestionar: Mamiferele acvatice</h4>
+      <p class="sub">Alege răspunsul corect, apoi apasă pe „Verifică”.</p>
+
+      <div class="q-block">
+        <p class="question">1. Cum se numește adăpostul săpat de vidră în mal?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Holt</button>
+          <button class="opt-btn" data-correct="false">Cuib</button>
+          <button class="opt-btn" data-correct="false">Vizuină de vulpe</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">2. Cum au pui mamiferele acvatice din Deltă?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Depun icre</button>
+          <button class="opt-btn" data-correct="true">Nasc pui vii</button>
+          <button class="opt-btn" data-correct="false">Din ouă puse pe stuf</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">3. Ce specie amenință nurca europeană?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Vidra</button>
+          <button class="opt-btn" data-correct="true">Nurca americană, adusă din altă parte a lumii</button>
+          <button class="opt-btn" data-correct="false">Pelicanul</button>
+        </div>
+      </div>
+
+      <button class="submit-btn">Verifică răspunsurile ✅</button>
+      <div class="result">
+        <p class="score"></p>
+        <div class="joke">😄 <span>De ce a fost vidra dată afară din echipa de înot? Pentru că tot făcea „valuri”!</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REPTILE & AMFIBIENI ================= -->
+<section class="section" id="reptile">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-icon">🐢</div>
+      <h2>Reptile și amfibieni</h2>
+    </div>
+    <p class="section-intro">Broaștele țestoase și broaștele obișnuite trăiesc atât pe uscat, cât și în apă, sărind cu ușurință dintr-o lume în alta.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🐢</span>
+        <h3>Broasca țestoasă de apă</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Mănâncă insecte, melci, pești mici și puțină plantă, deci este omnivoră.</div>
+        <div class="row"><b>👶 Reproducere</b>Iese pe uscat, sapă o gropiță în nisip și depune ouăle acolo, lăsând soarele să le încălzească.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Pierderea plajelor nisipoase și animalele care le distrug cuiburile îi scad numărul.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ</span>
+      </div>
+      <div class="card">
+        <span class="emoji">🐸</span>
+        <h3>Broasca de lac</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Vânează insecte, țânțari și alte animale mici cu limba ei lipicioasă.</div>
+        <div class="row"><b>👶 Reproducere</b>Depune ouă în apă; din ele ies mormoloci, care mai târziu se transformă în broscuțe.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Peștii răpitori și păsările mănâncă mormolocii înainte să crească mari.</div>
+      </div>
+    </div>
+
+    <div class="fact-box">
+      <span class="bulb">💡</span>
+      <div><h4>Știați că...?</h4><p>Mormolocii respiră inițial prin branhii, ca peștii, dar pe măsură ce cresc le apar plămâni și învață să respire aer, ca broaștele adulte!</p></div>
+    </div>
+
+    <div class="quiz" data-quiz="reptile">
+      <h4>🎯 Chestionar: Reptile și amfibieni</h4>
+      <p class="sub">Alege răspunsul corect, apoi apasă pe „Verifică”.</p>
+
+      <div class="q-block">
+        <p class="question">1. Unde își depune ouăle broasca țestoasă de apă?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Direct în apă</button>
+          <button class="opt-btn" data-correct="true">Într-o gropiță săpată în nisip, pe uscat</button>
+          <button class="opt-btn" data-correct="false">Pe frunzele plantelor</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">2. Cum se numesc puii de broască la început?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Mormoloci</button>
+          <button class="opt-btn" data-correct="false">Icre</button>
+          <button class="opt-btn" data-correct="false">Larve de fluture</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">3. De ce este broasca țestoasă de apă protejată?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Pierde plajele de nisip unde își face cuib</button>
+          <button class="opt-btn" data-correct="false">Pentru că este foarte rapidă</button>
+          <button class="opt-btn" data-correct="false">Nu este protejată</button>
+        </div>
+      </div>
+
+      <button class="submit-btn">Verifică răspunsurile ✅</button>
+      <div class="result">
+        <p class="score"></p>
+        <div class="joke">😄 <span>De ce merge broasca țestoasă atât de încet? Pentru că-și cară toată casa în spate!</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEVERTEBRATE ================= -->
+<section class="section" id="nevertebrate">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-icon">🦀</div>
+      <h2>Nevertebratele acvatice</h2>
+    </div>
+    <p class="section-intro">Racii și scoicile nu au coloană vertebrală, dar au un rol important: ele curăță apa și hrănesc mulți alți locuitori ai Deltei.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="emoji">🦞</span>
+        <h3>Racul de râu</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Mănâncă aproape orice găsește: plante, insecte și resturi de animale de pe fundul apei.</div>
+        <div class="row"><b>👶 Reproducere</b>Femela poartă ouăle lipite sub coadă până când ies puișorii de rac, complet formați.</div>
+        <div class="row"><b>⚠️ Amenințări</b>O specie de rac adusă din America aduce o boală care îmbolnăvește racii noștri.</div>
+      </div>
+      <div class="card">
+        <span class="emoji">🐚</span>
+        <h3>Scoica de apă dulce</h3>
+        <div class="row"><b>🍽️ Hrănire</b>Filtrează apa și se hrănește cu plancton, particule foarte mici plutind în apă.</div>
+        <div class="row"><b>👶 Reproducere</b>Larvele minuscule se prind temporar de branhiile peștilor, care le poartă în alte locuri din apă.</div>
+        <div class="row"><b>⚠️ Amenințări</b>Apa murdară le poate ucide, pentru că filtrează tot ce este în jurul lor, inclusiv poluarea.</div>
+        <span class="badge-protected">🛡️ SPECIE PROTEJATĂ (unele specii)</span>
+      </div>
+    </div>
+
+    <div class="fact-box">
+      <span class="bulb">💡</span>
+      <div><h4>Știați că...?</h4><p>O singură scoică de apă dulce poate filtra zeci de litri de apă într-o zi, funcționând ca un mic „filtru natural” pentru Deltă!</p></div>
+    </div>
+
+    <div class="quiz" data-quiz="nevertebrate">
+      <h4>🎯 Chestionar: Nevertebratele acvatice</h4>
+      <p class="sub">Alege răspunsul corect, apoi apasă pe „Verifică”.</p>
+
+      <div class="q-block">
+        <p class="question">1. Cu ce se hrănește scoica de apă dulce?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="false">Cu pești mari</button>
+          <button class="opt-btn" data-correct="true">Filtrează plancton din apă</button>
+          <button class="opt-btn" data-correct="false">Cu frunze uscate de copac</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">2. Unde își poartă racul de râu ouăle?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Lipite sub coadă</button>
+          <button class="opt-btn" data-correct="false">Într-un cuib de stuf</button>
+          <button class="opt-btn" data-correct="false">Pe branhiile peștilor</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="question">3. Ce le poate face rău scoicilor din Deltă?</p>
+        <div class="opts">
+          <button class="opt-btn" data-correct="true">Apa murdară, pentru că ele filtrează tot din jur</button>
+          <button class="opt-btn" data-correct="false">Prea mult soare</button>
+          <button class="opt-btn" data-correct="false">Nimic nu le afectează</button>
+        </div>
+      </div>
+
+      <button class="submit-btn">Verifică răspunsurile ✅</button>
+      <div class="result">
+        <p class="score"></p>
+        <div class="joke">😄 <span>Ce spune un rac timid? „Mai bine merg cu spatele, ca să nu mă vadă nimeni!”</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OCROTIM DELTA ================= -->
+<section class="closing" id="ocrotim">
+  <div class="wrap">
+    <h2>🛡️ Ocrotim Delta Dunării</h2>
+    <p>Delta Dunării este Rezervație a Biosferei — un loc atât de special, încât este ocrotit prin lege pentru ca toate aceste animale să poată trăi liniștite și în viitor.</p>
+    <div class="rules">
+      <div class="rule">🚯 Nu aruncăm gunoaie în apă sau pe maluri.</div>
+      <div class="rule">🤫 Nu deranjăm cuiburile păsărilor sau ale broaștelor țestoase.</div>
+      <div class="rule">🎣 Respectăm perioadele în care pescuitul nu este permis, ca peștii să se poată reproduce.</div>
+      <div class="rule">📢 Povestim și altora despre animalele Deltei, ca să învețe și ei să le ocrotească.</div>
+    </div>
+  </div>
+</section>
+
+<footer>Creat pentru elevii curioși de clasa a IV-a 🌾🐟🦢 — Ocrotim împreună Delta Dunării!</footer>
+
+<script>
+  // scroll progress boat
+  const boat = document.getElementById('boat');
+  const rail = document.querySelector('.river-rail');
+  function updateBoat(){
+    const railRect = rail.getBoundingClientRect();
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = Math.min(1, Math.max(0, window.scrollY / docHeight));
+    const top = railRect.top + pct * (railRect.height - 24);
+    boat.style.top = top + 'px';
+  }
+  window.addEventListener('scroll', updateBoat);
+  window.addEventListener('resize', updateBoat);
+  updateBoat();
+
+  // quiz logic
+  document.querySelectorAll('.quiz').forEach(quiz => {
+    const blocks = quiz.querySelectorAll('.q-block');
+    blocks.forEach(block => {
+      const btns = block.querySelectorAll('.opt-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        });
+      });
+    });
+
+    quiz.querySelector('.submit-btn').addEventListener('click', () => {
+      let correct = 0;
+      let answered = 0;
+      blocks.forEach(block => {
+        const btns = block.querySelectorAll('.opt-btn');
+        const chosen = block.querySelector('.opt-btn.selected');
+        if(chosen){
+          answered++;
+          if(chosen.dataset.correct === 'true') correct++;
+        }
+        btns.forEach(b => {
+          if(b.dataset.correct === 'true') b.classList.add('correct');
+          else if(b.classList.contains('selected')) b.classList.add('wrong');
+        });
+      });
+
+      const result = quiz.querySelector('.result');
+      const scoreEl = quiz.querySelector('.score');
+      let msg = '';
+      if(correct === blocks.length) msg = '🌟 Perfect! Ai răspuns corect la toate întrebările!';
+      else if(correct > 0) msg = `👏 Bravo! Ai răspuns corect la ${correct} din ${blocks.length} întrebări.`;
+      else msg = 'Nicio grijă, poți încerca din nou mai târziu! Iată o glumă:';
+      scoreEl.textContent = msg;
+      result.classList.add('show');
+    });
+  });
+</script>
+
+</body>
+</html>
